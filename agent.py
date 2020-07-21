@@ -139,7 +139,10 @@ def select_move_minimax(board, color, limit, caching = 0):
     If caching is ON (i.e. 1), use state caching to reduce the number of state evaluations.
     If caching is OFF (i.e. 0), do NOT use state caching to reduce the number of state evaluations.
     """
+    board = tuple([tuple(row) for row in board])
+    CACHE.clear()
     (move,value) = minimax_max_node(board,color,limit,caching)
+    CACHE.clear()
     return move
 
 
@@ -230,11 +233,12 @@ def select_move_alphabeta(board, color, limit, caching = 0, ordering = 0):
     If ordering is ON (i.e. 1), use node ordering to expedite pruning and reduce the number of state evaluations.
     If ordering is OFF (i.e. 0), do NOT use node ordering to expedite pruning and reduce the number of state evaluations.
     """
-    CACHE = {}
+    board = tuple([tuple(row) for row in board])
     alpha = float("-inf")
     beta = float("inf")
+    CACHE.clear()
     (move,value) = alphabeta_max_node(board,color,alpha,beta, limit, caching, ordering)
-    CACHE = {}
+    CACHE.clear()
     return move
 
 
@@ -246,7 +250,7 @@ def run_ai():
     Then it repeatedly receives the current score and current board state
     until the game is over.
     """
-    print("Othello AI") # First line is the name of this AI
+    print("Max") # First line is the name of this AI
     arguments = input().split(",")
 
     color = int(arguments[0]) #Player color: 1 for dark (goes first), 2 for light.
